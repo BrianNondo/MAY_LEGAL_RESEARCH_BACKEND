@@ -1,0 +1,54 @@
+# utils/openai_cleaner.py
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Load environment variables from .env file in parent directory
+load_dotenv()  # This will automatically load .env from parent folder
+
+# Initialize the OpenAI client with API key from .env
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Check if API key is loaded
+if not os.getenv("OPENAI_API_KEY"):
+    print("⚠️  Warning: OPENAI_API_KEY not found in .env file")
+    client = None
+
+SYSTEM_PROMPT = """
+You are MAY, a text cleaning assistant.
+
+TASK:
+- Rewrite user input into clear, correct English
+- Fix spelling, grammar, and abbreviations
+- Keep proper names exactly as they are
+- Determine if the user wants to know about someone:
+    - If yes, start the cleaned text with "who is"
+    - If no, start the cleaned text with "don't tell me about"
+- Do NOT answer the question or add new information
+- Output ONLY the cleaned text
+"""
+
+
+def clean_user_text(user_text: str) -> str:
+    """Clean user input using OpenAI"""
+    if client is None:
+        # Fallback: simple cleaning if OpenAI is not configured
+        return user_text.strip().lower()
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_text}
+            ],
+            temperature=0.0,
+            max_tokens=50
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"⚠️  OpenAI error: {e}")
+        # Fallback to original text
+        return user_text.strip()
+
+
