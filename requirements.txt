@@ -3,5 +3,4 @@ opensearch-py
 openai
 rapidfuzz
 Flask
-gunicorn
 flask-cors
