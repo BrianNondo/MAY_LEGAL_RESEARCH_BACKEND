@@ -1,4 +1,4 @@
-from functions.people import search_case
+from functions.who_function import search_case
 
 def what_query(user_input):
     """

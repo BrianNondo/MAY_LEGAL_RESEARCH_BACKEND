@@ -1,5 +1,5 @@
 import random
-from functions.people import search_person
+from functions.who_function import search_person
 
 def who_query(user_input):
     """
