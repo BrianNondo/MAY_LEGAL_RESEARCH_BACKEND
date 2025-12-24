@@ -1,0 +1,6 @@
+python-dotenv
+opensearch-py
+openai
+rapidfuzz
+Flask
+flask-cors
