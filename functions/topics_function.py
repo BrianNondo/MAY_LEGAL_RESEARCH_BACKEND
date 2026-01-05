@@ -186,7 +186,7 @@ def search_topics(topic, top_n=5):
                     "dismissed": "Dismissed"
                 }
                 message += f"**Status:** {status_map.get(status, status)}\n"
-            message += f"\n**See Full Case:** `{doc_id}`\n"
+            message += f'<a href="#" class="see-more-link" data-docid="{doc_id}" style="color:#346969; text-decoration: underline;">See Full Case</a><br>'
             message += "\n" + "=" * 60 + "\n\n"
 
         return message
