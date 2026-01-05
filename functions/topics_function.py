@@ -185,9 +185,9 @@ def search_topics(topic, top_n=5):
                     "appealed": "Appealed",
                     "dismissed": "Dismissed"
                 }
-                message += f"**Status:** {status_map.get(status, status)}\n"
-            message += f'<a href="#" class="see-more-link" data-docid="{doc_id}" style="color:#346969; text-decoration: underline;">See Full Case</a><br>'
-            message += "\n" + "=" * 60 + "\n\n"
+                message += f"**Status:** {status_map.get(status, status)}\n\n\n"
+            message += f'<a href="#" class="see-more-link" data-docid="{doc_id}" style="color:#346969; text-decoration: underline;">See all ...</a><br>'
+            message += "\n\n\n" + "=" * 60 + "\n\n"
 
         return message
 
