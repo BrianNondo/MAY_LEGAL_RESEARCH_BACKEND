@@ -7,6 +7,7 @@ from statements.may import may_query        # <-- add this
 # from statements.what import what_query
 from statements.topics import topics_query
 from text_cleaner.clean_text import clean_user_text
+from functions.fetch_file import fetch_file
 
 APOLOGY_RESPONSES = [
     "Sorry about that — I’m still adding some features. I’ll be able to help more soon.",
@@ -49,6 +50,11 @@ def handle_query(raw_input_text: str):
     if not raw_input_text:
         return None, "Please enter a query."
 
+    # ---------- GET FILE (FAKE RESPONSE ONLY) ----------
+    if "get_file:" in raw_input_text.lower():
+        response = fetch_file(raw_input_text)
+        return raw_input_text, response
+
     # ---------- CLEAN INPUT ----------
     try:
         cleaned_input = clean_user_text(raw_input_text)
@@ -73,6 +79,7 @@ def handle_query(raw_input_text: str):
     # ---------- FALLBACK ----------
     log_failed_query_json(cleaned_input)
     return cleaned_input, random.choice(APOLOGY_RESPONSES)
+
 
 
 def main():

@@ -121,7 +121,7 @@ def search_topics(topic, top_n=5):
         display_count = min(top_n, len(hits))
         for i, hit in enumerate(hits[:display_count], 1):
             src = hit['_source']
-
+            doc_id = hit.get('_id', hit.get('document_id', 'N/A'))
             # Use actual case fields from the document format
             document_type = src.get('document_type', 'Not specified')
             court_type = src.get('court_type', 'Not specified')
@@ -186,7 +186,7 @@ def search_topics(topic, top_n=5):
                     "dismissed": "Dismissed"
                 }
                 message += f"**Status:** {status_map.get(status, status)}\n"
-
+            message += f"\n**See Full Case:** `{doc_id}`\n"
             message += "\n" + "=" * 60 + "\n\n"
 
         return message
